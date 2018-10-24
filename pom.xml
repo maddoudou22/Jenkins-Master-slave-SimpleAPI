@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework</groupId>
-    <artifactId>gs-rest-service</artifactId>
+    <artifactId>API-javaSpringboot</artifactId>
     <version>0.1.0</version>
 
     <parent>
@@ -41,6 +41,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<outputDirectory>${targetRepo}</outputDirectory>
+				</configuration>
+			</plugin>
+			
+			
         </plugins>
     </build>
 
