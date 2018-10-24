@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Building in the snapshot repo ...'
 				sh 'pwd' 
-				sh 'mvn clean package -DtargetRepo /root/repositories/API-javaSpringboot_local/snapshot/'
+				sh 'mvn clean package -DtargetRepo=/root/repositories/API-javaSpringboot_local/snapshot/'
             }
         }
         stage('Test') {
