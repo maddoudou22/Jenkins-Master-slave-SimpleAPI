@@ -4,7 +4,7 @@ pipeline {
 	environment {
 		dockerRegistry = "maddoudou22/API-javaSpringboot"
 		registryCredential = 'dockerhub'
-		applicationName = 'API-javaSpringboot'
+		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
     }
     stages {
         stage('Build') {
@@ -23,13 +23,13 @@ pipeline {
         stage('Bake') {
             steps {
                 echo 'Building Docker image ...'
-				//sh 'rm /root/target/API-javaSpringboot*.jar'
+				//sh 'rm /root/target/${applicationName}*.jar'
             }
         }
 		stage('Deploy') {
             steps {
                 echo 'Building Docker image ...'
-				//sh 'rm /root/target/API-javaSpringboot*.jar'
+				//sh 'rm /root/target/${applicationName}*.jar'
             }
         }
     }
