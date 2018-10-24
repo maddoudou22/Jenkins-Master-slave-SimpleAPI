@@ -6,18 +6,19 @@ pipeline {
             steps {
                 echo 'Building in the snapshot repo ...'
 				sh 'pwd' 
-				//sh 'mvn clean package -DtargetRepo /root/repositories/API-javaSpringboot_local/snapshot/'
+				sh 'mvn clean package -DtargetRepo /root/repositories/API-javaSpringboot_local/snapshot/'
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
+				sh 'ls /root/repositories/API-javaSpringboot_local/snapshot/API-javaSpringboot*'
             }
         }
         stage('Clean') {
             steps {
                 echo 'Cleaning ...'
-				//sh 'rm target/API-javaSpringboot*.jar'
+				sh 'rm /root/target/API-javaSpringboot*.jar'
             }
         }
     }
