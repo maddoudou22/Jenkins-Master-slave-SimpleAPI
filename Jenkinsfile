@@ -27,7 +27,7 @@ pipeline {
 				echo 'Releasing Docker image in Docker registry ...'
 				//sh 'rm /root/target/${applicationName}*.jar'
 				echo 'Starting to build docker image'
-				sh 'docker build -t maddoudou22/${applicationName}:latest .'
+				sh 'docker build -t maddoudou22/repository:latest .'
                 //script {
                 //    def customImage = docker.build("my-image:${env.BUILD_ID}")
                 //    customImage.push()
