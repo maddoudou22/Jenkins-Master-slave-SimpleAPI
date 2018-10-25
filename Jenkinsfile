@@ -18,7 +18,7 @@ pipeline {
 				echo 'cocuou'
 				echo pom.version
 				echo 'cocuou2'
-				echo $POM_VERSION
+				echo '$POM_VERSION'
 				echo 'cocuou3'
 		    }
         }
