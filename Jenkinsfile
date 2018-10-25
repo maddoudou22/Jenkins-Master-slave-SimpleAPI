@@ -30,7 +30,7 @@ pipeline {
 				//sh 'rm /root/target/${applicationName}*.jar'
 				echo 'Starting to build docker image'
 				//sh 'docker build -t maddoudou22/api-javaspringboot:latest .'
-				sh 'docker build --build-arg PACKAGE_VERSION=${package_version} -t *{dockerRegistry}:${package_version} .' 
+				sh 'docker build --build-arg PACKAGE_VERSION=${package_version} -t ${dockerRegistry}:${package_version} .' 
                 //script {
                 //    def customImage = docker.build("my-image:${env.BUILD_ID}")
                 //    customImage.push()
