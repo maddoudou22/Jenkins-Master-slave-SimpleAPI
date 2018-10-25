@@ -1,5 +1,5 @@
 FROM java:8
-ARG VERSION=coucou
-COPY /target/API-javaSpringboot-${VERSION}.jar API-javaSpringboot-${VERSION}.jar
+ARG PACKAGE_VERSION
+COPY /target/API-javaSpringboot-${PACKAGE_VERSION}.jar API-javaSpringboot-${PACKAGE_VERSION}.jar
 EXPOSE 8080
-CMD java -jar API-javaSpringboot-${VERSION}.jar
+CMD java -jar API-javaSpringboot-${PACKAGE_VERSION}.jar
