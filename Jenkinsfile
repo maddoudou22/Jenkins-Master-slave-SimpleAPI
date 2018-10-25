@@ -19,7 +19,8 @@ pipeline {
 		stage('OWASP') {
             steps {
                 echo 'Check dependencies ...'
-				sh 'mvn verify'
+				//sh 'mvn verify'
+				sh 'mvn dependency-check:check'
             }
         }
         stage('Test') {
