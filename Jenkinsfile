@@ -10,7 +10,7 @@ pipeline {
     stages {
 		stage('prepare') {
 			steps {
-				*/script {
+				/*script {
 					pom = readMavenPom file: 'pom.xml'
 					pom.version
 					echo pom.version
