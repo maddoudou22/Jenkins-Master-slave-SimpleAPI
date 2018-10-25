@@ -15,8 +15,11 @@ pipeline {
 					pom.version
 					echo pom.version
 				}
+				echo 'cocuou'
 				echo pom.version
+				echo 'cocuou2'
 				echo $POM_VERSION
+				echo 'cocuou3'
 		    }
         }
         stage('Build') {
