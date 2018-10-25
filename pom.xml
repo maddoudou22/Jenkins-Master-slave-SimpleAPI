@@ -5,7 +5,7 @@
 
     <groupId>org.springframework</groupId>
     <artifactId>API-javaSpringboot</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -13,6 +13,14 @@
         <version>1.5.10.RELEASE</version>
     </parent>
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>API-javaSpringboot-snapshots</id>
+			<name>API-javaSpringboot snapshot repository</name>
+			<url>http://localhost:8081/nexus/content/repositories/API-javaSpringboot-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -34,7 +42,6 @@
         <java.version>1.8</java.version>
 		<sonar.dependencyCheck.reportPath>target/dependency-check-report.xml</sonar.dependencyCheck.reportPath>
     </properties>
-
 
     <build>
         <plugins>
