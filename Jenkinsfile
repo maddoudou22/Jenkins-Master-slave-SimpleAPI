@@ -8,6 +8,13 @@ pipeline {
 		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
     }
     stages {
+		stage('prepare')
+			steps {
+				pom = readMavenPom file: 'pom.xml'
+				pom.version
+				echo pom.version
+		    }
+        }
         stage('Build') {
             steps {
                 echo 'Building in the snapshot repo ...'
@@ -25,16 +32,7 @@ pipeline {
         stage('Bake') {
             steps {
                 echo 'Building Docker image ...'
-				//sh 'rm /root/target/${applicationName}*.jar'
-				echo 'Releasing Docker image in Docker registry ...'
-				//sh 'rm /root/target/${applicationName}*.jar'
-				echo 'Starting to build docker image'
-				//sh 'docker build -t maddoudou22/api-javaspringboot:latest .'
 				sh 'docker build --build-arg PACKAGE_VERSION=${package_version} -t ${dockerRegistry}:${package_version} .' 
-                //script {
-                //    def customImage = docker.build("my-image:${env.BUILD_ID}")
-                //    customImage.push()
-				//}
             }
         }
 		stage('Deploy') {
