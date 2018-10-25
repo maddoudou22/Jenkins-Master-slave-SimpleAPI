@@ -27,7 +27,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-				sh 'ls /var/lib/repositories/API-javaSpringboot_local/snapshot/${applicationName}*'
+				sh 'ls target/${applicationName}*'
             }
         }
         stage('Bake') {
