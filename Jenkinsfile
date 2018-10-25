@@ -13,7 +13,7 @@ pipeline {
                 echo 'Building in the snapshot repo ...'
 				//sh 'mvn clean package -DtargetRepo=/var/lib/repositories/API-javaSpringboot_local/snapshot/'
 				//sh 'mvn clean package'
-				sh 'mvn clean install'
+				sh 'mvn clean deploy'
             }
         }
 		stage('OWASP') {
