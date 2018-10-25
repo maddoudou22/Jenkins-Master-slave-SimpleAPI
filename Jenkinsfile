@@ -2,14 +2,14 @@ pipeline {
     agent any
 	
 	environment {
-		package_version = "0.1.0"
-		VERSION = readMavenPom().getVersion()
+		package_version = readMavenPom().getVersion()
+		//VERSION = readMavenPom().getVersion()
 		dockerRegistry = "maddoudou22/api-javaspringboot"
 		registryCredential = 'dockerhub'
 		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
     }
     stages {
-		stage('prepare') {
+		/*stage('prepare') {
 			steps {
 				script {
 					pom = readMavenPom file: 'pom.xml'
@@ -21,7 +21,7 @@ pipeline {
 				echo 'cocuou2'
 
 		    }
-        }
+        }*/
         stage('Build') {
             steps {
                 echo 'Building in the snapshot repo ...'
