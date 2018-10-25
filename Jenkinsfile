@@ -8,7 +8,7 @@ pipeline {
 		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
     }
     stages {
-		stage('prepare')
+		stage('prepare') {
 			steps {
 				pom = readMavenPom file: 'pom.xml'
 				pom.version
