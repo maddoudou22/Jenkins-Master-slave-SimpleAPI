@@ -16,6 +16,12 @@ pipeline {
 				sh 'mvn clean package'
             }
         }
+		stage('OWASP') {
+            steps {
+                echo 'Check dependencies ...'
+				sh 'mvn verify'
+            }
+        }
         stage('Test') {
             steps {
                 echo 'Testing..'
