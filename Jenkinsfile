@@ -3,6 +3,7 @@ pipeline {
 	
 	environment {
 		package_version = "0.1.0"
+		VERSION = readMavenPom().getVersion()
 		dockerRegistry = "maddoudou22/api-javaspringboot"
 		registryCredential = 'dockerhub'
 		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
