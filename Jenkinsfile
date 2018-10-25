@@ -15,7 +15,7 @@ pipeline {
 					pom.version
 					echo pom.version
 				}*/
-				pom = readMavenPom file: 'pom.xml'
+				def pom = readMavenPom file: 'pom.xml'
 				echo 'cocuou'
 				//echo pom.version
 				echo 'cocuou2'
