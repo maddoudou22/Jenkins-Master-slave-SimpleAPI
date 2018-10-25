@@ -2,7 +2,8 @@ pipeline {
     agent any
 	
 	environment {
-		dockerRegistry = "maddoudou22/API-javaSpringboot"
+		package_version = "0.1.0"
+		dockerRegistry = "maddoudou22/api-javaspringboot"
 		registryCredential = 'dockerhub'
 		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
     }
@@ -29,7 +30,7 @@ pipeline {
 				//sh 'rm /root/target/${applicationName}*.jar'
 				echo 'Starting to build docker image'
 				//sh 'docker build -t maddoudou22/api-javaspringboot:latest .'
-				sh 'docker build --build-arg PACKAGE_VERSION=0.1.0 -t maddoudou22/api-javaspringboot:latest .' 
+				sh 'docker build --build-arg PACKAGE_VERSION=${package_version} -t *{dockerRegistry}:${package_version} .' 
                 //script {
                 //    def customImage = docker.build("my-image:${env.BUILD_ID}")
                 //    customImage.push()
