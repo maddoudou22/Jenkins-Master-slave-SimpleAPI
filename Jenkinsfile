@@ -20,7 +20,8 @@ pipeline {
             steps {
                 echo 'Check dependencies ...'
 				//sh 'mvn verify'
-				sh 'mvn dependency-check:check'
+				//sh 'mvn dependency-check:check'
+				sh 'mvn clean dependency:purge-local-repository'
             }
         }
         stage('Test') {
