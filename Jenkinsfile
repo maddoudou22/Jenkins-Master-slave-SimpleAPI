@@ -15,6 +15,8 @@ pipeline {
 					pom.version
 					echo pom.version
 				}
+				echo pom.version
+				echo $POM_VERSION
 		    }
         }
         stage('Build') {
