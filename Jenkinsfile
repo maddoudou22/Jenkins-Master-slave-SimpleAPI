@@ -10,9 +10,11 @@ pipeline {
     stages {
 		stage('prepare') {
 			steps {
-				pom = readMavenPom file: 'pom.xml'
-				pom.version
-				echo pom.version
+				script {
+					pom = readMavenPom file: 'pom.xml'
+					pom.version
+					echo pom.version
+				}
 		    }
         }
         stage('Build') {
