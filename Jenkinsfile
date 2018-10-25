@@ -10,15 +10,16 @@ pipeline {
     stages {
 		stage('prepare') {
 			steps {
-				script {
+				*/script {
 					pom = readMavenPom file: 'pom.xml'
 					pom.version
 					echo pom.version
-				}
+				}*/
+				pom = readMavenPom file: 'pom.xml'
 				echo 'cocuou'
-				echo pom.version
+				//echo pom.version
 				echo 'cocuou2'
-				echo '$POM_VERSION'
+				echo ${pom.version}
 				echo 'cocuou3'
 		    }
         }
