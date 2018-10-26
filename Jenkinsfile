@@ -25,7 +25,7 @@ pipeline {
             steps {
                 echo 'Check OWASP dependencies ...'
 				sh 'mvn verify'
-				dependencyCheckPublisher canComputeNew: false, defaultEncoding: '', healthu: '', pattern: '**/dependency-check-report.xml', unhealthy: '' 
+				dependencyCheckPublisher canComputeNew: false, defaultEncoding: '', healthu: '', pattern: '**/dependency-check-report.xml', unHealthy: '' 
 				//sh 'mvn dependency-check:check'
             }
         }
