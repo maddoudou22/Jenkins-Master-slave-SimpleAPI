@@ -12,7 +12,8 @@ pipeline {
             steps {
                 echo 'Building in the snapshot repo ...'
 				//sh 'mvn clean package -DtargetRepo=/var/lib/repositories/API-javaSpringboot_local/snapshot/'
-				sh 'mvn release:clean'
+				sh 'mvn release:prepare'
+				//sh 'mvn deploy:deploy-file '-Durl=http://18.203.166.52:8081/nexus/content/repositories/API-javaSpringboot-release'
 				//sh 'mvn clean deploy'
             }
         }
