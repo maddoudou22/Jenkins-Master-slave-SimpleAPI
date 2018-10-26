@@ -49,6 +49,7 @@
 		
 		<dependency.check.report.dir>${project.build.directory}/dependency-check</dependency.check.report.dir>
 		<sonar.dependencyCheck.reportPath>${project.build.directory}/dependency-check/dependency-check-report.xml</sonar.dependencyCheck.reportPath>
+		<sonar.dependencyCheck.htmlReportPath>${project.build.directory}/dependency-check/dependency-check-report.html</sonar.dependencyCheck.htmlReportPath>
 		
 		
     </properties>
