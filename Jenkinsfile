@@ -15,17 +15,18 @@ pipeline {
 				sh 'mvn clean deploy'
             }
         }
-		stage('OWASP - Dependencies check') {
-            steps {
-                echo 'Check OWASP dependencies ...'
-				sh 'mvn verify'
-				//sh 'mvn dependency-check:check'
-            }
-        }
 		stage('Sonar - Code Quality') {
             steps {
                 echo 'Check Code Quality ...'
 				sh 'mvn sonar:sonar -Dsonar.host.url=http://18.203.166.52:9000 -Dsonar.login=e07f53d60fe3c1095d12eb3c51664ea1034c3afb'
+            }
+        }
+		stage('OWASP - Dependencies check') {
+            steps {
+                echo 'Check OWASP dependencies ...'
+				sh 'mvn verify'
+				dependencyCheckPublisher canComputeNew: false, defaultEncoding: '', healthu: '', pattern: '**/dependency-check-report.xml', unhealthy: '' 
+				//sh 'mvn dependency-check:check'
             }
         }
         stage('Test') {
