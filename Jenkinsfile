@@ -12,18 +12,18 @@ pipeline {
             steps {
                 echo 'Building in the snapshot repo ...'
 				//sh 'mvn clean package -DtargetRepo=/var/lib/repositories/API-javaSpringboot_local/snapshot/'
-				sh 'mvn clean deploy'
+				sh 'mvn deploy'
             }
         }
 		stage('OWASP - Dependencies check') {
             steps {
                 echo 'Check OWASP dependencies ...'
 				//sh 'mvn verify'
-				sh 'mvn clean dependency-check:check'
+				//sh 'mvn clean dependency-check:check'
+				sh 'mvn dependency-check:check'
 				sh 'mvn sonar:sonar'
 				//sh 'mvn org.owasp:dependency-check-maven:1.3.6:check -Dformat=XML'
 				//dependencyCheckPublisher canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/dependency-check-report.xml', unHealthy: '' 
-				//sh 'mvn dependency-check:check'
             }
         }
 		stage('Sonar - Code Quality') {
