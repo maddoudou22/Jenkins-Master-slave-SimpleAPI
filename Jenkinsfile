@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Building in the snapshot repo ...'
 				//sh 'mvn clean package -DtargetRepo=/var/lib/repositories/API-javaSpringboot_local/snapshot/'
-				sh 'mvn mvn release:clean'
+				sh 'mvn release:clean'
 				//sh 'mvn clean deploy'
             }
         }
