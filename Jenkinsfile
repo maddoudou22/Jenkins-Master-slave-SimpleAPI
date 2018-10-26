@@ -25,9 +25,7 @@ pipeline {
 		stage('Sonar - Code Quality') {
             steps {
                 echo 'Check Code Quality ...'
-					mvn sonar:sonar \
-						-Dsonar.host.url=http://18.203.166.52:9000 \
-						-Dsonar.login=e07f53d60fe3c1095d12eb3c51664ea1034c3afb
+				sh 'mvn sonar:sonar -Dsonar.host.url=http://18.203.166.52:9000 -Dsonar.login=e07f53d60fe3c1095d12eb3c51664ea1034c3afb'
             }
         }
         stage('Test') {
