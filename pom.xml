@@ -72,8 +72,7 @@
               <version>3.3.2</version>
               <configuration>
                   <failBuildOnCVSS>8</failBuildOnCVSS>
-				  <format>XML</format>
-				  <outputDirectory>${dependency.check.report.dir}</outputDirectory>
+
               </configuration>
               <executions>
                   <execution>
