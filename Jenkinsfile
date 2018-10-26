@@ -22,6 +22,7 @@ pipeline {
 				//sh 'mvn clean dependency-check:check'
 				sh 'mvn dependency-check:check'
 				sh 'cp target/dependency-check-report.html target/dependency-check/'
+				sh 'cp target/dependency-check/dependency-check-report.xml target/'
 				sh 'mvn sonar:sonar' // -Dsonar.dependencyCheck.reportPath=target/dependency-check-report.xml'
 				//sh 'mvn org.owasp:dependency-check-maven:1.3.6:check -Dformat=XML'
 				//dependencyCheckPublisher canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/dependency-check-report.xml', unHealthy: '' 
