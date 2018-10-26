@@ -20,6 +20,7 @@ pipeline {
                 echo 'Check OWASP dependencies ...'
 				//sh 'mvn verify'
 				sh 'mvn clean dependency-check:check'
+				sh 'mvn sonar:sonar'
 				//sh 'mvn org.owasp:dependency-check-maven:1.3.6:check -Dformat=XML'
 				//dependencyCheckPublisher canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/dependency-check-report.xml', unHealthy: '' 
 				//sh 'mvn dependency-check:check'
@@ -28,7 +29,7 @@ pipeline {
 		stage('Sonar - Code Quality') {
             steps {
                 echo 'Check Code Quality ...'
-				sh 'mvn package sonar:sonar -Dsonar.host.url=http://18.203.166.52:9000 -Dsonar.login=5db071a4af91f70a26089a039369660aecf974e2'
+				//sh 'mvn package sonar:sonar -Dsonar.host.url=http://18.203.166.52:9000 -Dsonar.login=5db071a4af91f70a26089a039369660aecf974e2'
 				//sh 'mvn sonar:sonar -Dsonar.host.url=http://18.203.166.52:9000 -Dsonar.login=5db071a4af91f70a26089a039369660aecf974e2'
             }
         }
