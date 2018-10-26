@@ -18,8 +18,9 @@ pipeline {
 		stage('OWASP - Dependencies check') {
             steps {
                 echo 'Check OWASP dependencies ...'
-				sh 'mvn verify'
-				sh 'mvn org.owasp:dependency-check-maven:1.3.6:check -Dformat=XML'
+				//sh 'mvn verify'
+				sh 'mvn clean dependency-check:check'
+				//sh 'mvn org.owasp:dependency-check-maven:1.3.6:check -Dformat=XML'
 				dependencyCheckPublisher canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/dependency-check-report.xml', unHealthy: '' 
 				//sh 'mvn dependency-check:check'
             }
