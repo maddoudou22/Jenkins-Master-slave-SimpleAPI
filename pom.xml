@@ -5,7 +5,7 @@
 
     <groupId>org.springframework</groupId>
     <artifactId>API-javaSpringboot</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -55,34 +55,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>${maven-deploy-plugin.version}</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.5.1</version>
-				<executions>
-					<execution>
-						<id>default-deploy</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<serverId>API-javaSpringboot-release</serverId>
-					<nexusUrl>http://18.203.166.52:8081/nexus/content/repositories/API-javaSpringboot-release</nexusUrl>
-					<skipStaging>true</skipStaging>
-				</configuration>
-			</plugin>
-			
+
             <plugin>
               <groupId>org.owasp</groupId>
               <artifactId>dependency-check-maven</artifactId>
