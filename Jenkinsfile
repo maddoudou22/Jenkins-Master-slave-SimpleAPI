@@ -37,7 +37,7 @@ pipeline {
 				//sh 'mvn verify'
 				//sh 'mvn clean dependency-check:check'
 				sh 'mvn dependency-check:check'
-				sh 'cp target/dependency-check-report.html target/dependency-check/'
+				//sh 'cp target/dependency-check-report.html target/dependency-check/'
 				sh 'cp target/dependency-check-report.html .'
 				//sh 'cp target/dependency-check/dependency-check-report.xml target/'
 				//sh 'cp target/dependency-check/dependency-check-report.xml .'
