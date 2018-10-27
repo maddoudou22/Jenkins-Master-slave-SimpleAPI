@@ -27,7 +27,7 @@ pipeline {
 		stage('Publish snapshot') {
             steps {
                 echo 'Publising into the snapshot repo ...'
-				//sh 'mvn jar:jar deploy:deploy'
+				sh 'mvn jar:jar deploy:deploy'
             }
         }
 		
