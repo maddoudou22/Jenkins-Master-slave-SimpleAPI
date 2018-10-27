@@ -29,7 +29,8 @@ public class ApplicationTests {
 	@LocalServerPort
 	private int port;
 
-	@Value("${local.management.port}")
+	//@Value("${local.management.port}")
+	@Value("${local.management.port:${local.server.port}}")
 	private int mgt;
 
 	@Autowired
