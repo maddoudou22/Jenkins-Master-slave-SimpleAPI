@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building in the snapshot repo ...'
+                echo 'Building ...'
 				//sh 'mvn clean package -DtargetRepo=/var/lib/repositories/API-javaSpringboot_local/snapshot/'
 				//sh 'mvn deploy'
 				sh 'mvn -Dmaven.test.skip=true install'
@@ -21,6 +21,13 @@ pipeline {
             steps {
                 echo 'Unit testing ...'
 				sh 'mvn test'
+            }
+        }
+
+		stage('Publish snapshot') {
+            steps {
+                echo 'Publising into the snapshot repo ...'
+				//sh 'mvn jar:jar deploy:deploy'
             }
         }
 		
