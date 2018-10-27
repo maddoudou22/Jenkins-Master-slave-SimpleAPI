@@ -13,7 +13,7 @@ pipeline {
                 echo 'Building ...'
 				//sh 'mvn clean package -DtargetRepo=/var/lib/repositories/API-javaSpringboot_local/snapshot/'
 				//sh 'mvn deploy'
-				sh 'mvn -Dmaven.test.skip=true install'
+				sh 'mvn -Dmaven.test.skip=true clean install'
             }
         }
 		
