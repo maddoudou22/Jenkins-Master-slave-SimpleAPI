@@ -45,13 +45,13 @@ public class ApplicationTests {
 		then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
 	}
 
-	@Test
+/*	@Test
 	public void shouldReturn200WhenSendingRequestToManagementEndpoint() throws Exception {
 		@SuppressWarnings("rawtypes")
 		ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
 				"http://localhost:" + this.mgt + "/actuator/info", Map.class);
 
 		then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
-	}
+	}*/
 
 }
