@@ -15,6 +15,14 @@ pipeline {
 				sh 'mvn deploy'
             }
         }
+		
+		stage('Unit test') {
+            steps {
+                echo 'Unit testing ...'
+				sh 'mvn test'
+            }
+        }
+		
 		stage('OWASP - Dependencies check') {
             steps {
                 echo 'Check OWASP dependencies ...'
@@ -30,6 +38,7 @@ pipeline {
 				//dependencyCheckPublisher canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/dependency-check-report.xml', unHealthy: '' 
             }
         }
+		
 		stage('Sonar - Code Quality') {
             steps {
                 echo 'Check Code Quality ...'
@@ -37,18 +46,21 @@ pipeline {
 				//sh 'mvn sonar:sonar -Dsonar.host.url=http://18.203.166.52:9000 -Dsonar.login=5db071a4af91f70a26089a039369660aecf974e2'
             }
         }
+		
         stage('Test') {
             steps {
                 echo 'Testing..'
 				sh 'ls target/${applicationName}*'
             }
         }
+		
         stage('Bake') {
             steps {
                 echo 'Building Docker image ...'
 				sh 'docker build --build-arg PACKAGE_VERSION=${package_version} -t ${dockerRegistry}:${package_version} .'
             }
         }
+		
 		stage('Deploy') {
             steps {
                 echo 'Building Docker image ...'
