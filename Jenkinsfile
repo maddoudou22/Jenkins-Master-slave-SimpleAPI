@@ -4,15 +4,13 @@ pipeline {
 	environment {
 		package_version = readMavenPom().getVersion()
 		dockerRegistry = "maddoudou22/api-javaspringboot"
-		registryCredential = 'dockerhub'
+		//registryCredential = 'dockerhub'
 		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
     }
     stages {
         stage('Build') {
             steps {
                 echo 'Building ...'
-				//sh 'mvn clean package -DtargetRepo=/var/lib/repositories/API-javaSpringboot_local/snapshot/'
-				//sh 'mvn deploy'
 				sh 'mvn -Dmaven.test.skip=true clean install'
             }
         }
