@@ -22,7 +22,7 @@
 		<repository>
 			<id>API-javaSpringboot-release</id>
 			<name>API-javaSpringboot release repository</name>
-			<url>http://18.203.166.52:8081/nexus/content/repositories/API-javaSpringboot-release</url>
+			<url>http://localhost:8081/nexus/content/repositories/API-javaSpringboot-release</url>
 		</repository>
 	</distributionManagement>
 	
