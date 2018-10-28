@@ -53,7 +53,7 @@ pipeline {
         stage('Bake') {
             steps {
                 echo 'Building Docker image ...'
-				sh 'docker build --build-arg PACKAGE_VERSION=${package_version} -t ${dockerRegistry}:${package_version} .'
+				sh 'docker build --rm --build-arg PACKAGE_VERSION=${package_version} -t ${dockerRegistry}:${package_version} .'
             }
         }
 		
