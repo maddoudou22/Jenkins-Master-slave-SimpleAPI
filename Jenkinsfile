@@ -61,8 +61,8 @@ pipeline {
 		
 		stage('Deploy') {
             steps {
-                echo 'Building Docker image ...'
-				//sh 'rm /root/target/${applicationName}*.jar'
+                echo 'Deploying Docker image in Kubernetes ...'
+				
             }
         }
     }
