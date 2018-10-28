@@ -43,10 +43,10 @@ pipeline {
             }
         }
 		
-        stage('Test') {
+        stage('Contract testing') {
             steps {
-                echo 'Testing..'
-				sh 'ls target/${applicationName}*'
+                echo 'Testing application conformity according to its Swagger definition ...'
+
             }
         }
 		
