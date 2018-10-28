@@ -33,7 +33,7 @@ pipeline {
             steps {
                 echo 'Check OWASP dependencies ...'
 				sh 'mvn dependency-check:check'
-				sh 'cp target/dependency-check-report.html .'
+				//sh 'cp target/dependency-check-report.html .'
             }
         }
 		
