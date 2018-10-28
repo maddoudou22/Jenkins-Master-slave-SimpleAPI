@@ -11,6 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building ...'
+				sh 'mvn clean org.jacoco:jacoco-maven-plugin:0.7.3.201502191951:prepare-agent install'
 				sh 'mvn -Dmaven.test.skip=true clean install'
             }
         }
