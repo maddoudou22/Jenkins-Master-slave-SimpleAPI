@@ -6,6 +6,7 @@ pipeline {
 		dockerRegistry = "maddoudou22/api-javaspringboot"
 		//registryCredential = 'dockerhub'
 		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
+		kubernetesNode = '172.18.1.54'
     }
     stages {
         stage('Build') {
@@ -62,6 +63,7 @@ pipeline {
 		stage('Deploy') {
             steps {
                 echo 'Deploying Docker image in Kubernetes ...'
+				sh 'ssh -i /var/lib/keys/aws_ireland_keypair.pem ubuntu@${kubernetesNode} "kubectl version"'
 				
             }
         }
