@@ -62,7 +62,7 @@ pipeline {
 
 		stage('Deploy') {
             steps {
-                echo 'Deploying Docker image in Kubernetes ...'
+                echo 'Deploying Docker image on Kubernetes ...'
 				sh 'ssh -i /var/lib/keys/aws_ireland_keypair.pem ubuntu@${kubernetesNode} "kubectl version"'
 				
             }
