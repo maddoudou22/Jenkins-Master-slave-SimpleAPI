@@ -9,7 +9,7 @@ pipeline {
 		kubernetesNode = '172.18.1.54'
     }
     stages {
-/*        stage('Build') {
+        stage('Build') {
             steps {
                 echo 'Building ...'
 				sh 'mvn -Dmaven.test.skip=true clean install'
@@ -59,7 +59,7 @@ pipeline {
 				sh 'docker rmi $(docker images --filter "dangling=true" -q --no-trunc) 2>/dev/null'
             }
         }
-*/		
+
 		stage('Deploy') {
             steps {
                 echo 'Deploying Docker image in Kubernetes ...'
