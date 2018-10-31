@@ -6,13 +6,17 @@ pipeline {
 		dockerRegistry = "maddoudou22/api-javaspringboot"
 		//registryCredential = 'dockerhub'
 		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
+<<<<<<< HEAD
 		kubernetesNodePrivateIP = '172-18-1-189'
+=======
+		kubernetesNode = 'devops.maddoudou.click'
+>>>>>>> e3b55e419f7d4be4cca2ca6cdfec625155c381a0
     }
     stages {
         stage('Build') {
             steps {
                 echo 'Building ...'
-				sh 'mvn -Dmaven.test.skip=true clean install'
+				sh 'mvn -T 10 -Dmaven.test.skip=true clean install'
             }
         }
 		
@@ -62,8 +66,13 @@ pipeline {
 
 		stage('Deploy') {
             steps {
+<<<<<<< HEAD
                 echo 'Deploying Docker image in Kubernetes ...'
 				sh 'ssh -i /var/lib/keys/aws_ireland_keypair.pem ubuntu@${kubernetesNodePrivateIP} "kubectl get nodes"'
+=======
+                echo 'Deploying Docker image on Kubernetes ...'
+				sh 'ssh -i /var/lib/keys/aws_ireland_keypair.pem ubuntu@${kubernetesNode} "kubectl version"'
+>>>>>>> e3b55e419f7d4be4cca2ca6cdfec625155c381a0
 				
             }
         }
