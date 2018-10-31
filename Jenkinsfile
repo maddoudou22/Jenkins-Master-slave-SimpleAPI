@@ -17,13 +17,13 @@ pipeline {
             }
         }
 		
-		stage('Unit test') {
+/*		stage('Unit test') {
             steps {
                 echo 'Unit testing ...'
 				sh 'mvn test'
             }
         }
-
+*/
 		stage('Publish snapshot') {
             steps {
                 echo 'Publising into the snapshot repo ...'
