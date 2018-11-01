@@ -6,7 +6,7 @@ pipeline {
 		dockerRegistry = "maddoudou22/api-javaspringboot"
 		//registryCredential = 'dockerhub'
 		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
-		kubernetesNodePrivateIP = '172.18.1.189'
+		kubernetesNodePrivateIP = '172.18.1.233'
 		//kubernetesNode = 'devops.maddoudou.click'
     }
     stages {
@@ -63,7 +63,7 @@ pipeline {
 
 		stage('Deploy') {
             steps {
-                echo 'Deploying Docker image in Kubernetes ...'
+                echo 'Deploying Docker image on Kubernetes ...'
 				sh 'ssh -i /var/lib/keys/ireland.pem ubuntu@${kubernetesNodePrivateIP} "kubectl get nodes"'
             }
         }
