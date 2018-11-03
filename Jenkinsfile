@@ -9,7 +9,7 @@ pipeline {
 		kubernetesNode = 'rancher.maddoudou.click'
     }
     stages {
-/*        stage('Build') {
+        stage('Build') {
             steps {
                 echo 'Building ...'
 				sh 'mvn -T 10 -Dmaven.test.skip=true clean install'
@@ -50,7 +50,7 @@ pipeline {
 
             }
         }
-		*/
+		
         stage('Bake') {
             steps {
                 echo 'Building Docker image ...'
@@ -65,8 +65,8 @@ pipeline {
 		stage('Deploy') {
             steps {
                 echo 'Deploying Docker image on Kubernetes ...'
-				//sh 'ssh -i /var/lib/keys/ireland.pem ubuntu@${kubernetesNode} "kubectl get nodes"'
-				sh 'docker run -d -p 8088:8080 ${dockerRegistry}/${dockerRepo}:${package_version}'
+				sh 'ssh -i /var/lib/keys/ireland.pem ubuntu@${kubernetesNode} "kubectl get nodes"'
+				//sh 'docker run -d -p 8088:8080 ${dockerRegistry}/${dockerRepo}:${package_version}'
             }
         }
     }
