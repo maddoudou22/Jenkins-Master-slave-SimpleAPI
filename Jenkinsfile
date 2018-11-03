@@ -66,7 +66,7 @@ pipeline {
             steps {
                 echo 'Deploying Docker image on Kubernetes ...'
 				//sh 'ssh -i /var/lib/keys/ireland.pem ubuntu@${kubernetesNode} "kubectl get nodes"'
-				sh 'docker run -d -p 8088:8080 ${dockerRegistry}/${dockerRepo}:{package_version}'
+				sh 'docker run -d -p 8088:8080 ${dockerRegistry}/${dockerRepo}:${package_version}'
             }
         }
     }
