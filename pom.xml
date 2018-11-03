@@ -13,6 +13,7 @@
         <version>2.0.5.RELEASE</version>
     </parent>
 
+  <!-- Nexus repositories configuration -->
 	<distributionManagement>
 		<snapshotRepository>
 			<id>API-javaSpringboot-snapshots</id>
@@ -25,7 +26,8 @@
 			<url>http://localhost:8081/nexus/content/repositories/API-javaSpringboot-release</url>
 		</repository>
 	</distributionManagement>
-	
+  <!-- /Nexus repositories configuration -->
+  
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -42,13 +44,15 @@
             <scope>test</scope>
         </dependency>
 		
+	<!-- Unit tests declaration -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-
+	<!-- /Unit tests declaration -->
+	
     </dependencies>
 
     <properties>
@@ -64,12 +68,15 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 			
-			
+		<!-- Sonar tests -->
 			<plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>3.5.0.1254</version>
 			</plugin>
+		<!-- /Sonar tests -->
+		
+		<!-- OWASP Dependecy check -->
             <plugin>
               <groupId>org.owasp</groupId>
               <artifactId>dependency-check-maven</artifactId>
@@ -85,8 +92,17 @@
                   </execution>
               </executions>
             </plugin>
+		<!-- /OWASP Dependecy check -->
 			
-			
+		<!-- Unit tests declaration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<useSystemClassLoader>false</useSystemClassLoader>
+				</configuration>
+			</plugin>
+		  <!-- Code coverage reporting to Sonar -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -106,10 +122,13 @@
 					</execution>
 				</executions>
 			</plugin>
+		  <!-- /Code coverage reporting to Sonar -->
+		<!-- /Unit tests declaration -->
 			
         </plugins>
     </build>
 
+  <!-- Nexus repositories declaration -->
     <repositories>
         <repository>
             <id>spring-releases</id>
@@ -122,4 +141,6 @@
             <url>https://repo.spring.io/libs-release</url>
         </pluginRepository>
     </pluginRepositories>
+  <!-- /Nexus repositories declaration -->
+	
 </project>

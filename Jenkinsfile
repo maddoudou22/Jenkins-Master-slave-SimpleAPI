@@ -3,11 +3,10 @@ pipeline {
 	
 	environment {
 		package_version = readMavenPom().getVersion()
-		dockerRegistry = "maddoudou22/api-javaspringboot"
-		//registryCredential = 'dockerhub'
+		dockerRegistry = "devops.maddoudou.click:5000"
+		dockerRepo = "api-javaspringboot"
 		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
-		kubernetesNodePrivateIP = '172.18.1.233'
-		//kubernetesNode = 'devops.maddoudou.click'
+		kubernetesNode = 'rancher.maddoudou.click'
     }
     stages {
         stage('Build') {
@@ -17,13 +16,13 @@ pipeline {
             }
         }
 		
-/*		stage('Unit test') {
+		stage('Unit test') {
             steps {
                 echo 'Unit testing ...'
 				sh 'mvn test'
             }
         }
-*/
+
 		stage('Publish snapshot') {
             steps {
                 echo 'Publising into the snapshot repo ...'
@@ -55,16 +54,19 @@ pipeline {
         stage('Bake') {
             steps {
                 echo 'Building Docker image ...'
-				sh 'docker build --rm --build-arg PACKAGE_VERSION=${package_version} --build-arg APPLICATION_NAME=${applicationName} -t ${dockerRegistry}:${package_version} .'
-				echo 'Removing dangling Docker image ...'
+				sh 'docker build --rm --build-arg PACKAGE_VERSION=${package_version} --build-arg APPLICATION_NAME=${applicationName} -t ${dockerRegistry}/${dockerRepo}:{package_version} .'
+				echo 'Removing dangling Docker image from the local registry ...'
 				sh 'docker rmi $(docker images --filter "dangling=true" -q --no-trunc) 2>/dev/null'
+				echo 'Publishing Docker image into the private registry ...'
+				sh 'docker push ${dockerRegistry}/${dockerRepo}:{package_version}'
             }
         }
 
 		stage('Deploy') {
             steps {
                 echo 'Deploying Docker image on Kubernetes ...'
-				sh 'ssh -i /var/lib/keys/ireland.pem ubuntu@${kubernetesNodePrivateIP} "kubectl get nodes"'
+				//sh 'ssh -i /var/lib/keys/ireland.pem ubuntu@${kubernetesNode} "kubectl get nodes"'
+				docker run -d -p 8088:8080 ${dockerRegistry}/${dockerRepo}:{package_version}
             }
         }
     }
