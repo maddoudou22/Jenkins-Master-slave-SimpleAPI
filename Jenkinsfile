@@ -58,7 +58,7 @@ pipeline {
 				echo 'Removing dangling Docker image from the local registry ...'
 				//sh "docker rmi $(docker images --filter "dangling=true" -q --no-trunc) 2>/dev/null"
 				echo 'Publishing Docker image into the private registry ...'
-				sh 'docker push ${dockerRegistry}/${dockerRepo}:{package_version}'
+				sh 'docker push ${dockerRegistry}/${dockerRepo}:${package_version}'
             }
         }
 
