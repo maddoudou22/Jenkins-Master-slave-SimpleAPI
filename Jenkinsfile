@@ -12,7 +12,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building ...'
-				sh 'mvn -T 10 -Dmaven.test.skip=true clean install'
+				//sh 'mvn -T 10 -Dmaven.test.skip=true clean install'
+				sh 'mvn -T 10 -Dmaven.test.skip=true clean package'
             }
         }
 		
