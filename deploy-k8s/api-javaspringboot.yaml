@@ -1,8 +1,21 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: api-javaspringboot-pod
+  name: api-javaspringboot
+  labels:
+    app: API-javaSpringboot
 spec:
-  containers:
-  - name: gitea-container
-    image: gitea/gitea:1.4
+  replicas: 1
+  selector:
+    matchLabels:
+      app: API-javaSpringboot
+  template:
+    metadata:
+      labels:
+        app: API-javaSpringboot
+    spec:
+      containers:
+      - name: api-javaspringboot
+        image: devops.maddoudou.click:5000/api-javaspringboot:0.1.0-SNAPSHOT
+        ports:
+        - containerPort: 8880

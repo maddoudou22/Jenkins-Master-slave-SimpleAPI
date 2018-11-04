@@ -7,6 +7,8 @@ pipeline {
 		dockerRepo = "api-javaspringboot"
 		applicationName = 'API-javaSpringboot' // Same as artifactId in pom.xml
 		kubernetesNode = 'rancher.maddoudou.click'
+		deploymentConfigurationPathSource = "deploy-k8s" // Location of the K8s deployment configuration on the pipeline instance
+		deploymentConfigurationPathKubernetes = "/home/ubuntu/k8s-deployments" // Location of the K8s deployment configuration on the K8s instace
     }
     stages {
         stage('Build') {
@@ -65,8 +67,11 @@ pipeline {
 
 		stage('Deploy') {
             steps {
-                echo 'Deploying Docker image on Kubernetes ...'
+                echo 'Checking Kubernetes readiness ...'
 				sh 'ssh -oStrictHostKeyChecking=no -i /var/lib/keys/ireland.pem ubuntu@${kubernetesNode} "kubectl get nodes"'
+				echo 'Sending deployment configuration to Kubernetes ...'
+				sh 'pwd'
+				sh 'scp -oStrictHostKeyChecking=no -i /var/lib/keys/ireland.pem ${deploymentConfigurationPathSource}/${applicationName}.yaml ubuntu@${kubernetesNode}:/${deploymentConfigurationPathKubernetes}/${applicationName}/
 				//sh 'docker run -d -p 8088:8080 ${dockerRegistry}/${dockerRepo}:${package_version}'
             }
         }
