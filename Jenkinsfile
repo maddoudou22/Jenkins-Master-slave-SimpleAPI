@@ -71,7 +71,7 @@ pipeline {
 				sh 'ssh -oStrictHostKeyChecking=no -i /var/lib/keys/ireland.pem ubuntu@${kubernetesNode} "kubectl get nodes"'
 				echo 'Sending deployment configuration to Kubernetes ...'
 				sh 'pwd'
-				sh 'scp -oStrictHostKeyChecking=no -i /var/lib/keys/ireland.pem ${deploymentConfigurationPathSource}/${applicationName}.yaml ubuntu@${kubernetesNode}:/${deploymentConfigurationPathKubernetes}/${applicationName}/'
+				sh 'scp -oStrictHostKeyChecking=no -i /var/lib/keys/ireland.pem ${deploymentConfigurationPathSource}/${applicationName}.yaml ubuntu@${kubernetesNode}:${deploymentConfigurationPathKubernetes}/${applicationName}'
 				//sh 'docker run -d -p 8088:8080 ${dockerRegistry}/${dockerRepo}:${package_version}'
             }
         }
