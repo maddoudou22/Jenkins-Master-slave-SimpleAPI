@@ -14,6 +14,5 @@ echo "Git Commit ..."
 git commit -m "latest push from windows"
 
 echo "Git Push ..."
-git push -f %URL_Projet_Git%
+git push %URL_Projet_Git%
 
-pause
