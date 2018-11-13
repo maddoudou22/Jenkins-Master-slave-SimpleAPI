@@ -33,7 +33,7 @@ Parameters:
    ImageKubeMaster:
      Description: Image de l'instance hebergeant le master Kubernetes.
      Type: AWS::EC2::Image::Id
-     Default: ami-048d7ab9fddac12ab
+     Default: ami-0468de20342c49a99
    TypeInstance:
      Description: Le type d'instance pour le master Kubernetes (t3.small recommandee).
      Type: String
@@ -47,7 +47,7 @@ Parameters:
 # Autoscaling Group et Laod-balancer pour les worker nodes
    NomLaunchConfiguration:
      Description: Le nom de la "Launch Configuration" utilisee pour instancier les EC2 des Worker Nodes Kubernetes
-     Default: "KubeWorker-nodes"
+     Default: "KubeWorker-node"
      Type: String
    NomAutoScalingGroup:
      Description: Le nom du groupe auto-scaling hebergeant les Worker Nodes Kubernetes
