@@ -31,11 +31,11 @@ Parameters:
 
    DomaineDNS:
      Description: HostedZone de Route53 dans laquelle déclarer l'enregistrement DNS
-     Default: "maddoudou.click."
+     Default: "damand.fr."
      Type: String
    FQDNinstance:
      Description: Le FQDN de l'instance declare dans Route53 (ne pas oublier le "." a la fin)
-     Default: "devops.maddoudou.click."
+     Default: "devops.damand.fr."
      Type: String
    NomInstanceEC2:
      Description: Nom de l'instance hebergeant le pipeline DevOps.
