@@ -25,8 +25,8 @@ pipeline {
                 echo 'Building ...'
 				//sh 'mvn -T 10 -Dmaven.test.skip=true clean install'
 				
-				sh 'mvn -T 1C -Dmaven.test.skip=true dependency:purge-local-repository clean package'
-				//sh 'mvn -T 1C -Dmaven.test.skip=true clean package'
+				//sh 'mvn -T 1C -Dmaven.test.skip=true dependency:purge-local-repository clean package'
+				sh 'mvn -T 1C -Dmaven.test.skip=true clean package'
             }
         }
 		
@@ -48,8 +48,8 @@ pipeline {
             steps {
                 echo 'Check OWASP dependencies ...'
 				
-				//sh 'mvn dependency-check:purge'
-				sh 'mvn dependency-check:check'
+				sh 'mvn dependency-check:purge'
+				//sh 'mvn dependency-check:check'
             }
         }
 		
