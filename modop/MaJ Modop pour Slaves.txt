@@ -126,6 +126,7 @@ Selon le tuto : https://blog.iseatz.com/ec2-plugin-jenkins-automatically-provisi
 			Cliquer sur les boutons 'Next:Tags', 'Next: Review' et 'Create User'.
 			-> Noter L'Access Key ID et le Secret Access Key de l'utilisateur créé.
 
+------------ KO -------------
 	- Dans la console du master, aller dans 'Administrer Jenkins' -> 'Configurer le système'
 		. Dans la section 'Cloud', cliquer sur le bouton 'Ajouter un nouveau Cloud' et sélectionnez 'Amazon EC2'.
 			. 'Name' : saisir un nom (exemple : 'Jenkins EC2')
@@ -152,6 +153,58 @@ A TESTER				. Stop/Disconnect on Idle Timeout : cocher
 				. Subnet ID : indiquer l'ID du subnet dans lequel les instances seront créées.
 				. Instance Cap : indiquer le nombre d'instances max à exécuter en parallèle (selon le nombre de builds parallèles à gérer).
 		. Cliquer sur 'Enregistrer'.
+------------ KO -------------
+
+	- Dans la console AWS, dans EC2, aller dans l'onglet 'Spot Requests'
+		. Cliquer sur le bouton 'Request Spot Instances'
+			. Sélectionner 'Flexible workloads'
+			. Dans AMI, sélectionner l'AMI du Slave Jenkins.
+			. Sélectionner les paramètres réseau et la keypair à utiliser.
+			. Laisser la 'Desirer Capacity' à 1
+			. Cliquer sur 'Save'
+
+	- Dans la console du master, aller dans 'Administrer Jenkins' -> 'Configurer le système'
+		. Dans la section 'Cloud', cliquer sur le bouton 'Ajouter un nouveau Cloud' et sélectionnez 'Amazon SpotFleet'.
+			. 'Name' : saisir un nom (exemple : 'Jenkins - EC2 FleetCloud')
+			. 'Amazon EC2 Credentials' : sélectionner “Add”, puis “Jenkins”
+				. “Type” : “AWS Credentials”
+				. Remplir les champs “Access Key ID” et “Secret Access Key” de l'utilisateur créé dans IAM.
+				. Cliquer sur 'Ajouter'.
+			. 'Region' : Sélectionner la région (ex : 'eu-west-1')
+			. 'Spot Fleet' : sélectionner la flotte créée dan AWS
+			. 'Launcher' : cliquer sur le bouton 'Ajouter' et sélectionner 'Jenkins'
+				. Type : choisir 'SSH Username with private key'
+				. 'Key Pair's Private Key' : Coller la clé privée PEM avec laquelle le slave Jenkins sera provisionné.
+				. 'username' : saisir le nom de l'utilisateur pour se connecter à une instance (ex : 'ubuntu')
+				. 'ID' : saisir un identifiant de clé (ex : le nom de la clé)
+				. 'Passphrase' : saisir la passphrase associée à la clé
+			. Cocher la case 'Connect using private IP'
+			. Label : saisir le label qui sera indiqué dans le Jenkinsfile pour indiquer l'Agent à exécuter (ex : 'Jenkins-slave-forSpot')
+			. Jenkins fielsystem root : /var/lib/jenkins
+			. Minimum Cluster Size : 0
+			. Maximum Cluster Size : 2
+		. Cliquer sur le bouton 'Enregistrer'
+
+
+
+			. 'AMIs' : cliquer sur le bouton 'Ajouter'
+				. Description : reprendre la description de l'AMI dans AWS
+				. AMI ID : indiquer l'ID de l'AMI du slave Jenkins
+				. Instance Type : sélectionner le type d'instance (ex : T3a.medium)
+				. Cocher la case 'Use Spot Instance'
+					. Spot Max Bid Price : saisir un prix (ex : 0.1)
+				. Security group names : saisir l'ID du Security Group qui sera utilisé par les instances Spot
+				
+				. Remote user : jenkins
+				. AMI Type -> Remote ssh port : 22
+				
+				. Cliquer sur le bouton 'Avancé' :
+					. Number of executors : 1
+A TESTER				. Stop/Disconnect on Idle Timeout : cocher
+				. Subnet ID : indiquer l'ID du subnet dans lequel les instances seront créées.
+				. Instance Cap : indiquer le nombre d'instances max à exécuter en parallèle (selon le nombre de builds parallèles à gérer).
+		. Cliquer sur 'Enregistrer'.
+
 
 
 	Dans le Jenkinsfile, remplacer 'agent any' tout au début par la section suivante :

@@ -2,8 +2,8 @@ pipeline {
     //agent any
 	agent { 
         node {
-            //label '!master'
-			label 'Jenkins-slave-forSpot'
+            label '!master'
+			//label 'Jenkins-slave-forSpot'
         }
     }
 	
@@ -62,7 +62,7 @@ pipeline {
 		stage('Sonar - Code Quality') {
             steps {
                 echo 'Check Code Quality ...'
-				sh 'mvn sonar:sonar -Dsonar.host.url=http://34.248.248.60:9000' // -Dsonar.dependencyCheck.reportPath=target/dependency-check-report.xml'
+				sh 'mvn sonar:sonar -Dsonar.host.url=http://34.254.113.44:9000' // -Dsonar.dependencyCheck.reportPath=target/dependency-check-report.xml'
             }
         }
 /*		
