@@ -2,8 +2,8 @@ pipeline {
     //agent any
 	agent { 
         node {
-            label '!master'
-            //customWorkspace '/home/build/jenkins/workspace/pipelines/ook'
+            //label '!master'
+			label 'Jenkins-slave-forSpot'
         }
     }
 	

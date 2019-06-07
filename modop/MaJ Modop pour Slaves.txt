@@ -62,9 +62,108 @@ En Mode manu sans Spot Fleet :
 				. Coller la ligne suivante :
 					top -b -n 1 | head -n 10 && hostname
 
+	- Sur le slave :
+		- Installer Docker
+			# apt-get install docker.io
+		- Donner les droits à Jenkins d'utiliser Docker :
+			# usermod -aG docker jenkins
+			# chmod 777 /var/run/docker.sock
+		- Installer la CLI AWS si besoin :
+			# apt  install awscli
+
 _______________________________
 
 Avec Spot Fleet :
+Selon le tuto : https://blog.iseatz.com/ec2-plugin-jenkins-automatically-provision-slaves/
+
+
+	Pré-requis :
+	- Sur le master, installer les plugins 'Amazon EC2' et 'EC2 fleet' (requière de redémarrer Jenkins)
+	- Créer une image AMI d'un slave Jenkins (cf configuration d'un slave ci-dessus).
+
+	- Dans AWS IAM, créer une policy endossée par Jenkins pour la gestion des instances EC2 :
+		. Créer la policy suivante :
+{
+   "Version": "2012-10-17",
+   "Statement": [
+       {
+           "Sid": "VisualEditor0",
+           "Effect": "Allow",
+           "Action": [
+               "ec2:DescribeInstances",
+               "ec2:TerminateInstances",
+               "ec2:RequestSpotInstances",
+               "ec2:DeleteTags",
+               "ec2:CreateTags",
+               "ec2:DescribeRegions",
+               "ec2:RunInstances",
+               "ec2:DescribeSpotInstanceRequests",
+               "ec2:StopInstances",
+               "ec2:DescribeSecurityGroups",
+               "ec2:GetConsoleOutput",
+               "ec2:DescribeSpotPriceHistory",
+               "ec2:DescribeImages",
+               "ec2:CancelSpotInstanceRequests",
+               "iam:PassRole",
+               "ec2:StartInstances",
+               "ec2:DescribeAvailabilityZones",
+               "ec2:DescribeSubnets",
+               "ec2:DescribeKeyPairs"
+           ],
+           "Resource": "*"
+       }
+   ]
+}
+		. Donner un nom à cette policy et (ex : "jenkins-EC2-management-policy").
+		. Cliquer sur Create Policy
+
+	- Dans AWS IAM, créer un utilisateur endossant cette policy :
+		. Add 'User' 
+			. Name : 'jenkins-spot-fleet'
+			. Access Type : sélectionner 'Programmatic Access'
+			Cliquer sur le bouton 'Next: permission'
+			. Cliquer sur le bouton 'Attach existing policies directly' et choisir la policy précédemment créée ('jenkins-EC2-management-policy')
+			Cliquer sur les boutons 'Next:Tags', 'Next: Review' et 'Create User'.
+			-> Noter L'Access Key ID et le Secret Access Key de l'utilisateur créé.
+
+	- Dans la console du master, aller dans 'Administrer Jenkins' -> 'Configurer le système'
+		. Dans la section 'Cloud', cliquer sur le bouton 'Ajouter un nouveau Cloud' et sélectionnez 'Amazon EC2'.
+			. 'Name' : saisir un nom (exemple : 'Jenkins EC2')
+			. 'Amazon EC2 Credentials' : sélectionner “Add”, puis “Jenkins”
+				. “Type” : “AWS Credentials”
+				. Remplir les champs “Access Key ID” et “Secret Access Key” de l'utilisateur créé dans IAM.
+				. Cliquer sur 'Ajouter'.
+			. 'Region' : Sélectionner la région (ex : 'eu-west-1')
+			. 'Key Pair's Private Key' : Coller la clé privée PEM avec laquelle le slave Jenkins sera provisionné.
+			. 'AMIs' : cliquer sur le bouton 'Ajouter'
+				. Description : reprendre la description de l'AMI dans AWS
+				. AMI ID : indiquer l'ID de l'AMI du slave Jenkins
+				. Instance Type : sélectionner le type d'instance (ex : T3a.medium)
+				. Cocher la case 'Use Spot Instance'
+					. Spot Max Bid Price : saisir un prix (ex : 0.1)
+				. Security group names : saisir l'ID du Security Group qui sera utilisé par les instances Spot
+				. Remote FS root : /var/lib/jenkins
+				. Remote user : jenkins
+				. AMI Type -> Remote ssh port : 22
+				. Labels : saisir le label qui sera indiqué dans le Jenkinsfile pour indiquer l'Agent à exécuter (ex : 'Jenkins-slave-forSpot')
+				. Cliquer sur le bouton 'Avancé' :
+					. Number of executors : 1
+A TESTER				. Stop/Disconnect on Idle Timeout : cocher
+				. Subnet ID : indiquer l'ID du subnet dans lequel les instances seront créées.
+				. Instance Cap : indiquer le nombre d'instances max à exécuter en parallèle (selon le nombre de builds parallèles à gérer).
+		. Cliquer sur 'Enregistrer'.
+
+
+	Dans le Jenkinsfile, remplacer 'agent any' tout au début par la section suivante :
+		agent { 
+        		node {
+            			//label '!master'
+				label 'Jenkins-slave-forSpot'
+            		}
+   		 }
+
+
+
 
 	Préchargement des dépendances Maven :
 	- Dans la console du master, aller dans 'Administrer Jenkins' -> 'Configurer le système'
