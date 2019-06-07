@@ -1,5 +1,11 @@
 pipeline {
-    agent any
+    //agent any
+	agent { 
+        node {
+            label '!master'
+            //customWorkspace '/home/build/jenkins/workspace/pipelines/ook'
+        }
+    }
 	
 	environment {
 		package_version = readMavenPom().getVersion()

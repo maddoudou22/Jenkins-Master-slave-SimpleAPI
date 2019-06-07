@@ -1,0 +1,74 @@
+
+Selon le tuto :
+https://www.howtoforge.com/tutorial/ubuntu-jenkins-master-slave/
+
+
+ - Sur le Slave, instancier une Ubuntu 18.04 et installer Java et Maven.
+ - Sur le master, installer le plugin 'Slave SetupPlugin'
+
+
+____________________________________________
+
+En Mode manu sans Spot Fleet :
+	- Sur le master, générer une clé :
+		# su - jenkins
+		# ssh-keygen
+			Nom de clé : <laisser par défaut>
+			Pas de passphrase
+
+	- Dans la console du master, aller dans 'Identifiants'
+		. Dans la partie 'Stores scoped to Jenkins', cliquer sur le lien '_(global)'
+		. Cliquer sur 'Ajouter des identifiants' :
+			. Type : Kind: SSH Username with private key
+			. Scope: Global
+			. Username: jenkins
+			. Private key: copier/coller la clé privée le contenu du fichier 'id_rsa' (clé privée)
+			. Clicker sur 'OK'.
+
+	- Sur le slave :
+		- Installer software-properties-common et apt-transport-https :
+			# apt install software-properties-common apt-transport-https -y
+		- Créer un utilisateur Jenkins :
+			# useradd -m -s /bin/bash jenkins
+			# passwd Jenkins
+				-> Saisir un mot de passe
+		- Authoriser une connexion via mot de passe (pour le POC uniquement) :
+			# vi /etc/ssh/sshd_config
+				-> Mettre le paramètre '' à 'yes'
+		- Redémarrer sshd :
+			# systemctl restart sshd
+
+	- Sur le Master :
+		- Toujours en tant qu'utilisateur Jenkins et depuis son répertoire local (/var/lib/jenkins), copier la clé Jenkins sur le slave :
+			# ssh-copy-id jenkins@<IP privée slave>
+
+				-> Saisir le mot de passe de l'utilisateur Jenkins du Slave
+	- Dans la console du master, aller dans 'Administrer Jenkins' -> 'Gérer les noeuds'
+		- Cliquer sur 'Créer un noeud', 
+			. Saisir le nom 'jenkins-slave-manu'
+			. Cocher la case 'Permanent Agent'
+		- Cliquer sur Ok
+			. Saisir une description
+			. Répertoire de travail du système distant : /home/jenkins
+			. Etiquette : jenkins-slave-manu
+			. Dans 'Méthode de lancement', saisir l'IP privée sur slave Jenkins
+				. Authentification, Choisir 'Jenkins'
+			. Laisser les autres options et cliquer sur 'Enregistrer'
+
+	- Dans la console du master, créer un 'Freestyle Project' et configurer Git.
+			. Dans la section 'General' de la configuration, cocher 'Restreindre où le projet peut être exécuté'
+				. Dans 'Expression', coller le label du slave node (ex : 'jenkins-slave-manu')
+			. Dans l'onglet 'Build', cliquer sur 'Ajouter une étape de Build' et sélectionner 'Exécuter un script shell' :
+				. Coller la ligne suivante :
+					top -b -n 1 | head -n 10 && hostname
+
+_______________________________
+
+Avec Spot Fleet :
+
+	Préchargement des dépendances Maven :
+	- Dans la console du master, aller dans 'Administrer Jenkins' -> 'Configurer le système'
+		- Dans la section 'Slave Setup', cliquer sur le bouton 'Ajouter'.
+			. Dans 'Pre-Launch script', indiquer './prelaunch.sh'
+
+	
