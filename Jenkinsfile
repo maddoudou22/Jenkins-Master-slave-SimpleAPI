@@ -2,8 +2,8 @@ pipeline {
     //agent any
 	agent { 
         node {
-            label '!master'
-			//label 'Jenkins-slave-forSpot'
+            //label '!master'
+			label 'Jenkins-slave-forSpot'
         }
     }
 	
