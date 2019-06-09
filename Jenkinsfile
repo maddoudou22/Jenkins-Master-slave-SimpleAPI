@@ -3,7 +3,8 @@ pipeline {
 	agent { 
         node {
             //label '!master'
-			label 'Jenkins-slave-forSpot'
+			label '	jenkins-slave-manu'
+			//label 'Jenkins-slave-forSpot'
         }
     }
 	
