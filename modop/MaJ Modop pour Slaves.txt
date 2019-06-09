@@ -164,8 +164,8 @@ A TESTER				. Stop/Disconnect on Idle Timeout : cocher
 			. Dans 'Additional Configurations' :
 				. Sélectionner le Security Group à utiliser
 				. Sélectionner le role à endosser par les instances Spot (ex : 'jenkins-EC2-spotinstance-assumed-role')
-			. Laisser la 'Desirer Capacity' à 1
-			. 
+			. Mettre la 'Desirer Capacity' à 0
+			. Cocher la case 'Maintain target capacity'
 			. Cliquer sur 'Save'
 
 	- Dans la console du master, aller dans 'Administrer Jenkins' -> 'Configurer le système'
@@ -253,6 +253,13 @@ IAM policy
         {
             "Effect": "Allow",
             "Action": [
+                "ecr:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
                 "s3:GetObject",
                 "s3:List*",
                 "s3:ListBucket",
@@ -267,6 +274,8 @@ IAM policy
         }
     ]
 }
+
+
 
 
 Bucket policy :
