@@ -243,6 +243,10 @@ Policy utilisee par une instance Spot instanciee a la volee par un master Jenkin
  - ECR, pour l ajout d images Docker dans un repo ECR.
 
 
+Executé avec Ubuntu, donc ajouter utilisateur Ubuntu dans groupe Docker
+usermod -aG docker ubuntu
+ -> Rebooter l'instance pour prise en compte !
+
 
 Test synchro avec aws sync command
 
