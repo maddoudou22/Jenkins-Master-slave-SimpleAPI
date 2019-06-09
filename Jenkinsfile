@@ -40,7 +40,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building ...'
-				//sh 'mvn -T 10 -Dmaven.test.skip=true clean install'
+				//sh 'mvn -T 10 -Dmaven.test.skip=true -gs $EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY clean install'
 				
 				//sh 'mvn -T 1C -Dmaven.test.skip=true dependency:purge-local-repository clean package'
 				sh 'mvn -T 1C -Dmaven.test.skip=true clean package'
@@ -50,7 +50,7 @@ pipeline {
 		stage('Unit test') {
             steps {
                 echo 'Unit testing ...'
-				sh 'mvn -T 1C test'
+				sh 'mvn -T 1C -gs $EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY test'
             }
         }
 /*
@@ -66,7 +66,7 @@ pipeline {
                 echo 'Check OWASP dependencies ...'
 				
 				//sh 'mvn dependency-check:purge'
-				sh 'mvn dependency-check:check'
+				sh 'mvn -gs $EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY dependency-check:check'
             }
         }
 		
