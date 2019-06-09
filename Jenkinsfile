@@ -51,7 +51,7 @@ pipeline {
 		stage('Unit test') {
             steps {
                 echo 'Unit testing ...'
-				sh 'mvn -T 1C -gs $EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY test'
+				sh 'mvn -T 1C test'
             }
         }
 /*
@@ -67,7 +67,7 @@ pipeline {
                 echo 'Check OWASP dependencies ...'
 				
 				//sh 'mvn dependency-check:purge'
-				sh 'mvn -gs $EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY dependency-check:check'
+				sh 'mvn dependency-check:check'
             }
         }
 		
