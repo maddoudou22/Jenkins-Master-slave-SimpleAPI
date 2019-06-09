@@ -3,8 +3,8 @@ pipeline {
 	agent { 
         node {
             //label '!master'
-			label '	jenkins-slave-manu'
-			//label 'Jenkins-slave-forSpot'
+			//label '	jenkins-slave-manu'
+			label 'Jenkins-slave-forSpot'
         }
     }
 	
@@ -16,6 +16,9 @@ pipeline {
 		applicationName = 'Jenkins-Master-slave-SimpleAPI' // Same as artifactId in pom.xml
 		AWS_REGION = "eu-west-1"
 		AWS_ACCOUNT_ID = "962109799108"
+		SONAR_ENDPOINT = "http://34.250.131.213:9000"
+		EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY = "/home/jenkins/.m2"
+		S3_BUCKET_MAVEN_DEPENDENCIES = "s3://jenkinsspotfleetmavencache/Jenkins-Master-slave-SimpleAPI/.m2/"
     }
 	
     stages {
@@ -63,7 +66,7 @@ pipeline {
 		stage('Sonar - Code Quality') {
             steps {
                 echo 'Check Code Quality ...'
-				sh 'mvn sonar:sonar -Dsonar.host.url=http://34.250.131.213:9000' // -Dsonar.dependencyCheck.reportPath=target/dependency-check-report.xml'
+				sh 'mvn sonar:sonar -Dsonar.host.url=$SONAR_ENDPOINT' // -Dsonar.dependencyCheck.reportPath=target/dependency-check-report.xml'
             }
         }
 /*		
@@ -87,6 +90,13 @@ pipeline {
 				echo 'Publishing Docker image into the private registry ...'
 				sh 'docker push ${dockerRegistry}/${dockerRepo}:${package_version}'
             }
+        }
+		
+		stage('Dependencies sync') {
+            steps {
+				echo 'Copying the maven dependencies to an S3 bucket ...'
+				sh 'aws s3 sync $EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY $S3_BUCKET_MAVEN_DEPENDENCIES'
+			}
         }
     }
 

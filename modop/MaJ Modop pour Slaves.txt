@@ -158,9 +158,14 @@ A TESTER				. Stop/Disconnect on Idle Timeout : cocher
 	- Dans la console AWS, dans EC2, aller dans l'onglet 'Spot Requests'
 		. Cliquer sur le bouton 'Request Spot Instances'
 			. Sélectionner 'Flexible workloads'
+			. Choisir le type d'instance à utiliser
 			. Dans AMI, sélectionner l'AMI du Slave Jenkins.
-			. Sélectionner les paramètres réseau et la keypair à utiliser.
+			. Sélectionner les paramètres réseau (VPC et Subnet) et la keypair à utiliser.
+			. Dans 'Additional Configurations' :
+				. Sélectionner le Security Group à utiliser
+				. Sélectionner le role à endosser par les instances Spot (ex : 'jenkins-EC2-spotinstance-assumed-role')
 			. Laisser la 'Desirer Capacity' à 1
+			. 
 			. Cliquer sur 'Save'
 
 	- Dans la console du master, aller dans 'Administrer Jenkins' -> 'Configurer le système'
@@ -224,3 +229,63 @@ A TESTER				. Stop/Disconnect on Idle Timeout : cocher
 			. Dans 'Pre-Launch script', indiquer './prelaunch.sh'
 
 	
+
+
+
+
+____________________________
+
+Sync ne delete pas par defaut, supprimer le cache depuis le bucket S3 pour purge.
+
+
+Policy utilisee par une instance Spot instanciee a la volee par un master Jenkins avec le plugin -EC2 SpotFleet- et lui donnant les droits suivants.
+ - S3, pour la synchronisation des dependances Maven avec un Bucket via la commande aws s3 sync.
+ - ECR, pour l ajout d images Docker dans un repo ECR.
+
+
+
+Test synchro avec aws sync command
+
+IAM policy 
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:List*",
+                "s3:ListBucket",
+                "s3:PutObject",
+                "s3:PutObjectAcl",
+                "s3:DeleteObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::jenkinsspotfleetmavencache",
+                "arn:aws:s3:::jenkinsspotfleetmavencache/*"
+            ]
+        }
+    ]
+}
+
+
+Bucket policy :
+{
+    "Statement": [
+        {
+            "Sid": "AllowSyncFromEC2Instance",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::962109799108:role/jenkins-EC2-spotinstance-assumed-role"
+            },
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::jenkinsspotfleetmavencache",
+                "arn:aws:s3:::jenkinsspotfleetmavencache/*"
+            ]
+        }
+    ]
+}
+
