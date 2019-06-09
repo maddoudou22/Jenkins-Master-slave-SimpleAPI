@@ -17,11 +17,18 @@ pipeline {
 		AWS_REGION = "eu-west-1"
 		AWS_ACCOUNT_ID = "962109799108"
 		SONAR_ENDPOINT = "http://34.250.131.213:9000"
-		EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY = "/home/jenkins/.m2"
+		EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY = ".m2"
 		S3_BUCKET_MAVEN_DEPENDENCIES = "s3://jenkinsspotfleetmavencache/Jenkins-Master-slave-SimpleAPI/.m2/"
     }
 	
     stages {
+		stage('Download dependencies from S3') {
+            steps {
+				echo 'Get the cached maven dependencies from an S3 bucket ...'
+				sh 'aws s3 sync $S3_BUCKET_MAVEN_DEPENDENCIES $EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY'
+			}
+        }
+		
 	    stage('Prepa baking') {
             steps {
                 echo 'Getting previous image ...'
