@@ -24,6 +24,11 @@ pipeline {
     stages {
 		stage('Download dependencies from S3') {
             steps {
+			
+				sh 'whoami'
+				sh 'pwd'
+				sh '$(aws ecr get-login --no-include-email --region $AWS_REGION)'
+			
 				echo 'Get the cached maven dependencies from an S3 bucket ...'
 				//sh 'mkdir -p $EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY'
 				sh 'aws s3 sync $S3_BUCKET_MAVEN_DEPENDENCIES $EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY'
