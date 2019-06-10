@@ -3,7 +3,7 @@ pipeline {
         node {
             //label '!master'
 			//label '	jenkins-slave-manu'
-			label 'Jenkins-slave-spot'
+			label 'slavespot'
         }
     }
 	
