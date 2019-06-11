@@ -15,7 +15,7 @@ pipeline {
 		applicationName = 'Jenkins-Master-slave-SimpleAPI' // Same as artifactId in pom.xml
 		AWS_REGION = "eu-west-1"
 		AWS_ACCOUNT_ID = "962109799108"
-		SONAR_ENDPOINT = "http://34.250.131.213:9000"
+		SONAR_ENDPOINT = "http://34.240.115.247:9000"
 		EC2_LOCAL_MAVEN_DEPENDENCIES_DIRECTORY = "/home/ubuntu/.m2"
 		S3_BUCKET_MAVEN_DEPENDENCIES = "s3://jenkinsspotfleetmavencache/Jenkins-Master-slave-SimpleAPI/.m2/"
     }
